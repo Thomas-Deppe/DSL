@@ -1,0 +1,10 @@
+init
+idle
+
+Mouse_Instruct
+
+Timer_Instruct
+
+Test_Instruct
+sw A 11
+lw B 02
