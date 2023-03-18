@@ -225,10 +225,10 @@ def print_to_file(outFile):
     print("-----------Finished writing to a file-----------")
                 
 def compile(): 
-    #inFile = sys.argv[1]
-    #outFile = sys.argv[2]
-    inFile = "basic_instructs.txt"
-    outFile = "ROM_Basic.txt"
+    inFile = sys.argv[1]
+    outFile = sys.argv[2]
+    #inFile = "basic_instructs.txt"
+    #outFile = "ROM_Basic.txt"
     read_instructions(inFile)
     initialise_Instructions()
     convert_instruction_to_mem()
