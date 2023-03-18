@@ -30,58 +30,58 @@ class Instruction:
         self.reg1 = reg1
         self.reg2 = reg2
         self.memory_addr = memory_addr
-        self.target_reg = target
+        self.target = target
         self.instruction = instruction
         self.ROM_instruct = ""
         
         if instruction == "lw":
-            self.ROM_instruct = format(ord(target)-65, '02x')
-            print(self.ROM_instruct)
+            self.ROM_instruct = format(ord(self.target)-65, '02x')
+            #print(self.ROM_instruct)
         elif instruction == "sw":
-            self.ROM_instruct = format((ord(target)-65)+2, '02x')
-            print(self.ROM_instruct)
+            self.ROM_instruct = format((ord(self.target)-65)+2, '02x')
+            #print(self.ROM_instruct)
         elif instruction == "add":
-            self.ROM_instruct = "0" + str((ord(target)-65)+4)
-            print(self.ROM_instruct)
+            self.ROM_instruct = "0" + str((ord(self.target)-65)+4)
+            #print(self.ROM_instruct)
         elif instruction == "sub":
-            self.ROM_instruct = "1" + str((ord(target)-65)+4)
-            print(self.ROM_instruct)
+            self.ROM_instruct = "1" + str((ord(self.target)-65)+4)
+            #print(self.ROM_instruct)
         elif instruction == "mul":
-            self.ROM_instruct = "2" + str((ord(target)-65)+4, '02x')
-            print(self.ROM_instruct)
+            self.ROM_instruct = "2" + str((ord(self.target)-65)+4)
+            #print(self.ROM_instruct)
         elif instruction == "sl":
-            self.ROM_instruct = "3" + str((ord(target)-65)+4)
-            print(self.ROM_instruct)
+            self.ROM_instruct = "3" + str((ord(self.target)-65)+4)
+            #print(self.ROM_instruct)
         elif instruction == "sr":
-            self.ROM_instruct = "4" + str((ord(target)-65)+4)
-            print(self.ROM_instruct)
+            self.ROM_instruct = "4" + str((ord(self.target)-65)+4)
+            #print(self.ROM_instruct)
         elif instruction == "inc":
             if reg1 == "A":
-                self.ROM_instruct = "5"+str((ord(target)-65)+4)
+                self.ROM_instruct = "5"+str((ord(self.target)-65)+4)
             elif reg1 == "B":
-                self.ROM_instruct = "6"+str((ord(target)-65)+4)
-            print(self.ROM_instruct)
+                self.ROM_instruct = "6"+str((ord(self.target)-65)+4)
+            #print(self.ROM_instruct)
         elif instruction == "dec":
             if reg1 == "A":
-                self.ROM_instruct = "7"+str((ord(target)-65)+4)
+                self.ROM_instruct = "7"+str((ord(self.target)-65)+4)
             elif reg1 == "B":
-                self.ROM_instruct = "8"+str((ord(target)-65)+4)
-            print(self.ROM_instruct)
+                self.ROM_instruct = "8"+str((ord(self.target)-65)+4)
+            #print(self.ROM_instruct)
         elif instruction == "breq":
             self.ROM_instruct = "96"
-            print(self.ROM_instruct)
+            #print(self.ROM_instruct)
         elif instruction == "bgtq":
             self.ROM_instruct = "A6"
-            print(self.ROM_instruct)
+            #print(self.ROM_instruct)
         elif instruction == "bltq":
             self.ROM_instruct = "B6"
-            print(self.ROM_instruct)
+            #print(self.ROM_instruct)
         elif instruction == "idle":
             self.ROM_instruct = "08"
-            print(self.ROM_instruct)
+            #print(self.ROM_instruct)
         elif instruction == "ret":
             self.ROM_instruct = "0A"
-            print(self.ROM_instruct)
+            #print(self.ROM_instruct)
         elif instruction == "deref":
             if reg1 == "A":
                 self.ROM_instruct = "0B"
@@ -108,23 +108,22 @@ def read_instructions(infile):
         line.strip()
         line = line.split()
         if len(line) > 0:
-            if line[0] not in ["lw", "sw"]:
+            if line[0] not in ["lw", "sw", "add", "sub", "mul", "sl","sr", "inc", "dec", "breq", "bgtq", "bltq","idle","ret","deref","goto","func"]:
                 print("-----------Creating new instruction set-----------")
                 instruct_sets[line[0]] = Instruction_set(line[0])
                 current_instruct = line[0]
-                print(instruct_sets)
+                print(current_instruct)
             elif line[0] in ["lw", "sw"]:
                 instruct_sets[current_instruct].instructions.append(
                     Instruction(instruction=line[0], target=line[1], memory_addr=line[2])
                 )
-                print(instruct_sets[current_instruct])
-            elif line[0] in ["add","sub","mul","or"]:
+            elif line[0] in ["add","sub","mul"]:
                 instruct_sets[current_instruct].instructions.append(
-                    Instruction(instruction=line[0], reg1=line[1], reg2=line[2], memory_addr=line[3])
+                    Instruction(instruction=line[0], reg1=line[1], reg2=line[2], target=line[1])
                 )
             elif line[0] in ["sl","sr","inc","dec"]:
                 instruct_sets[current_instruct].instructions.append(
-                    Instruction(instruction=line[0], reg1=line[1], target=line[2])
+                    Instruction(instruction=line[0], reg1=line[1], target=line[1])
                 )
             elif line[0] in ["beq","bgtq","bltq"]:
                 instruct_sets[current_instruct].instructions.append(
@@ -155,7 +154,6 @@ def initialise_Instructions():
     print("-----------Setting initials-----------")
     
     curr_size = instruct_sets["init"].num_instructions()
-    print(curr_size)
     instruct_sets["init"].ROM_ADDR = lineCounter
     lineCounter += curr_size
 
@@ -173,8 +171,6 @@ def initialise_Instructions():
     instruct_sets["Timer_Instruct"].ROM_ADDR = lineCounter
     lineCounter += curr_size
 
-    print(lineCounter)
-
 def convert_instruction_to_mem():
     global lineCounter
     global curr_size
@@ -189,26 +185,30 @@ def convert_instruction_to_mem():
 
             ins.ROM_ADDR = lineCounter
             lineCounter += curr_size
-
+    print("-----------Instructions-----------")
     for ins in instruct_sets.values():
         offset = 0
         print(ins.name)
         print(ins.ROM_ADDR)
 
         for x in ins.instructions:
-            #print(x.instruction)
-            #print(ins.ROM_ADDR + offset)
+            print(x.instruction)
             if x.instruction in ["lw", "sw"]:
+                #print("sw or lw")
                 ROM_DATA[ins.ROM_ADDR + offset] = x.ROM_instruct
+                print(x.ROM_instruct)
                 ROM_DATA[ins.ROM_ADDR + offset+1] = x.memory_addr
+                print(x.memory_addr)
                 offset += 2
-            if x.instruction in ["beq", "bgtq", "bltq", "goto","func"]:
+            elif x.instruction in ["beq", "bgtq", "bltq", "goto","func"]:
                 ROM_DATA[ins.ROM_ADDR + offset] = x.ROM_instruct
-                ROM_DATA[ins.ROM_ADDR + offset+1] = format(instruct_sets[x.target].ROM_ADDR, '02X')
+                print(x.ROM_instruct)
+                ROM_DATA[ins.ROM_ADDR + offset+1] = format(instruct_sets[x.target].ROM_ADDR, '02x')
+                print(ROM_DATA[ins.ROM_ADDR + offset+1])
                 offset += 2
             else: 
-                #print(x.ROM_instruct)
                 ROM_DATA[ins.ROM_ADDR + offset] = x.ROM_instruct
+                print(x.ROM_instruct)
                 offset += 1
 
     print(ROM_DATA)

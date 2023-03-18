@@ -5,21 +5,22 @@ Mouse_Instruct
 
 Timer_Instruct
 
+Basic_Instruct
 sw A 1e //Stores A into address 01
 
 lw B 02 //loads value at addres 02 to reg B
 
-breq 01 //Branch to address. Load program counter with ADDR if reg A equal to reg B
+breq A B Basic_Instruct //Branch to address. Load program counter with ADDR if reg A equal to reg B
 
-bgtq 02 //Branch to address. load program counter with ADDR if reg A greater than reg B
+bgtq A B Mouse_Instruct //Branch to address. load program counter with ADDR if reg A greater than reg B
 
-bltq 03 //Branch to address. load program counter with ADDR if reg A less than reg B
+bltq A B Timer_Instruct //Branch to address. load program counter with ADDR if reg A less than reg B
 
 idle //Goes to idle state
 
-goto 04 //Goes to ADDR 04
+goto Basic_Instruct //Goes to ADDR 04
 
-func 05 //Calls last adress on stack
+func Timer_Instruct //Calls last adress on stack
 
 ret //pops stack address into program counter
 
@@ -29,9 +30,9 @@ deref A //Reads memory ADDR stored in reg A
 
 add A B
 
-sub A B 
+sub B A
 
-mul A B 
+mul A B
 
 sl A
 
