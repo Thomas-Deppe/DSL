@@ -105,7 +105,7 @@ current_instruct = ""
 def read_instructions(infile):
     print("-----------Starting------------")
     for line in fileinput.input(infile):
-        print(line)
+        line.strip()
         line = line.split()
         if len(line) > 0:
             if line[0] not in ["lw", "sw"]:
@@ -220,15 +220,15 @@ def print_to_file(outFile):
 
     with open(outFile, 'w') as file:
         for line in ROM_DATA:
-            file.write(str(line))
+            file.write(str(line)+"\n")
     
     print("-----------Finished writing to a file-----------")
                 
 def compile(): 
-    inFile = sys.argv[1]
-    outFile = sys.argv[2]
-    #inFile = "test_instruct.txt"
-    #outFile = "ROM.txt"
+    #inFile = sys.argv[1]
+    #outFile = sys.argv[2]
+    inFile = "basic_instructs.txt"
+    outFile = "ROM_Basic.txt"
     read_instructions(inFile)
     initialise_Instructions()
     convert_instruction_to_mem()
