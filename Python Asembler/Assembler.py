@@ -125,7 +125,7 @@ def read_instructions(infile):
                 instruct_sets[current_instruct].instructions.append(
                     Instruction(instruction=line[0], reg1=line[1], target=line[1])
                 )
-            elif line[0] in ["beq","bgtq","bltq"]:
+            elif line[0] in ["breq","bgtq","bltq"]:
                 instruct_sets[current_instruct].instructions.append(
                     Instruction(instruction=line[0], reg1=line[1], reg2=line[2], target=line[3])
                 )
@@ -200,7 +200,7 @@ def convert_instruction_to_mem():
                 ROM_DATA[ins.ROM_ADDR + offset+1] = x.memory_addr
                 print(x.memory_addr)
                 offset += 2
-            elif x.instruction in ["beq", "bgtq", "bltq", "goto","func"]:
+            elif x.instruction in ["breq", "bgtq", "bltq", "goto","func"]:
                 ROM_DATA[ins.ROM_ADDR + offset] = x.ROM_instruct
                 print(x.ROM_instruct)
                 ROM_DATA[ins.ROM_ADDR + offset+1] = format(instruct_sets[x.target].ROM_ADDR, '02x')
