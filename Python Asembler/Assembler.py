@@ -108,7 +108,9 @@ def read_instructions(infile):
         line.strip()
         line = line.split()
         if len(line) > 0:
-            if line[0] not in ["lw", "sw", "add", "sub", "mul", "sl","sr", "inc", "dec", "breq", "bgtq", "bltq","idle","ret","deref","goto","func"]:
+            if line[0] in ["//"]:
+                pass
+            elif line[0] not in ["lw", "sw", "add", "sub", "mul", "sl","sr", "inc", "dec", "breq", "bgtq", "bltq","idle","ret","deref","goto","func"]:
                 print("-----------Creating new instruction set-----------")
                 instruct_sets[line[0]] = Instruction_set(line[0])
                 current_instruct = line[0]
@@ -227,8 +229,8 @@ def print_to_file(outFile):
 def compile(): 
     #inFile = sys.argv[1]
     #outFile = sys.argv[2]
-    inFile = "basic_instructs.txt"
-    outFile = "ROM_Basic.txt"
+    inFile = "Mouse_Demo.txt"
+    outFile = "ROM_MOUSE_DEMO.txt"
     read_instructions(inFile)
     initialise_Instructions()
     convert_instruction_to_mem()

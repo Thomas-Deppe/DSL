@@ -4,6 +4,25 @@ idle
 Timer_Instruct
 func Disp_Instruct
 
+Init_Colour
+lw A 00
+sw A B0
+
+LoopA 
+inc B B
+sw B B1
+sw B B2 
+li A 160
+beq A B xFunc
+lw A 02
+beq A B YFunc
+goto LoopA
+
+xFunc 
+
+
+
+
 Choose_Instruct_to_display
 
 Mouse_Instruct
