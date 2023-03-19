@@ -1,0 +1,50 @@
+
+init 
+idle
+
+Timer_Instruct
+
+
+Mouse_Instruct
+lw A A1
+sw A D0
+
+Basic_Instruct
+
+inc A A //Increments A and stores to A
+
+sw A 02 //Stores A into address 1e
+
+lw B 02 //loads value at addres 02 to reg B
+
+breq A B Basic_Instruct //Branch to address. Load Basic_Instruct with ADDR if reg A equal to reg B
+
+bgtq A B Mouse_Instruct //Branch to address. load to Mouse_Instruct with ADDR if reg A greater than reg B
+
+bltq A B Timer_Instruct //Branch to address. load to Timer_Instruct with ADDR if reg A less than reg B
+
+idle //Goes to idle state
+
+goto Basic_Instruct //Goes to ADDR 04
+
+func Timer_Instruct //Calls last adress on stack
+
+ret //pops stack address into program counter
+
+deref B //Reads memory ADDR stored in reg B
+
+deref A //Reads memory ADDR stored in reg A
+
+add A B
+
+sub B A
+
+mul A B
+
+sl A
+
+sr B
+
+inc A A
+
+dec B A 
