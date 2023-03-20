@@ -16,13 +16,13 @@ sw B 02
 lw A A2
 sw A 03
 
-// sw A D0
+goto idle
 
 Choose_DISP
 
 lw A E0
 lw B 04
-beq A B DISP_X
+breq A B DISP_X
 bltq A B DISP_Status
 bgtq A B DISP_Y
 goto Mouse_Instruct

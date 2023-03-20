@@ -3,7 +3,7 @@ import sys
 import fileinput
 
 SIZE_OF_ROM = 256
-ROM_DATA = ["00" for x in range(SIZE_OF_ROM)]
+ROM_DATA = ["0F" for x in range(SIZE_OF_ROM)]
 lineCounter = 0
 curr_size = 0
 
@@ -11,7 +11,7 @@ class Instruction_set:
 
     def __init__(self, name):
         self.name = name
-        ROM_ADDR = 0
+        self.ROM_ADDR = 0
         self.instructions = []
     
     def num_instructions(self):
@@ -90,10 +90,15 @@ class Instruction:
             self.ROM_instruct = "07"
         elif instruction == "func":
             self.ROM_instruct = "09"
+        elif instruction == "li":
+            if reg1 == "A":
+                self.ROM_instruct = "0D"
+            elif reg1 == "B":
+                self.ROM_instruct = "0E"
         
         
     def size(self):
-        if self.instruction in ["lw", "sw","breq","bgtq","bltq","goto","func"]:
+        if self.instruction in ["lw", "sw","breq","bgtq","bltq","goto","func", "li"]:
             return 2
         else:
             return 1
@@ -109,7 +114,7 @@ def read_instructions(infile):
         if len(line) > 0:
             if line[0] in ["//"]:
                 pass
-            elif line[0] not in ["lw", "sw", "add", "sub", "mul", "sl","sr", "inc", "dec", "breq", "bgtq", "bltq","idle","ret","deref","goto","func"]:
+            elif line[0] not in ["lw", "sw", "add", "sub", "mul", "sl","sr", "inc", "dec", "breq", "bgtq", "bltq","idle","ret","deref","goto","func", "li"]:
                 print("-----------Creating new instruction set-----------")
                 instruct_sets[line[0]] = Instruction_set(line[0])
                 current_instruct = line[0]
@@ -146,6 +151,10 @@ def read_instructions(infile):
                 assert current_instruct in instruct_sets
                 instruct_sets[current_instruct].instructions.append(
                     Instruction(instruction=line[0])
+                )
+            elif line[0] in ["li"]:
+                instruct_sets[current_instruct].instructions.append(
+                    Instruction(instruction=line[0], reg1=line[1], target=line[2])
                 )
     print("-----------Finished reading instructions-----------")
 
@@ -212,6 +221,13 @@ def convert_instruction_to_mem():
                 ROM_DATA[ins.ROM_ADDR + offset+1] = format(instruct_sets[x.target].ROM_ADDR, '02x')
                 print(ROM_DATA[ins.ROM_ADDR + offset+1])
                 offset += 2
+            elif x.instruction in ["li"]:
+                ROM_DATA[ins.ROM_ADDR + offset] = x.ROM_instruct
+                if len(x.target) < 2:
+                    x.target = "0" + x.target
+                ROM_DATA[ins.ROM_ADDR + offset + 1] = x.target 
+
+                offset += 2
             else: 
                 ROM_DATA[ins.ROM_ADDR + offset] = x.ROM_instruct
                 print(x.ROM_instruct)
@@ -233,8 +249,8 @@ def print_to_file(outFile):
 def compile(): 
     #inFile = sys.argv[1]
     #outFile = sys.argv[2]
-    inFile = "Mouse_Demo.txt"
-    outFile = "ROM_MOUSE_DEMO.txt"
+    inFile = "Load_Immediate_Test.txt"
+    outFile = "ROM_IMMEDIATE.txt"
     read_instructions(inFile)
     initialise_Instructions()
     convert_instruction_to_mem()
