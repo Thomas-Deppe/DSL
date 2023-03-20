@@ -139,7 +139,11 @@ module Processor(
     
     DE_REFERENCE_A = 8'h70,
     DE_REFERENCE_B = 8'h71,
-    DE_REFERENCE_0 = 8'h72;    
+    DE_REFERENCE_0 = 8'h72,
+    
+    LOAD_IMMEDIATE_A = 8'h80,
+    LOAD_IMMEDIATE_B = 8'h81,
+    LOAD_IMMEDIATE_0 = 8'h82;  
      
     /*  Complete the above parameter list for In/Equality, Goto Address, Goto Idle, 
     function start, Return from function, and Dereference operations.  */
@@ -176,7 +180,7 @@ module Processor(
         end  
     end
     
-    //Combinatorial section – large!  
+    //Combinatorial section - large!  
     always@* begin   
         //Generic assignment to reduce the complexity of the rest of the S/M   
         NextState = CurrState;   
@@ -240,7 +244,9 @@ module Processor(
                     4'h9: NextState = FUNCTION_START;               
                     4'hA: NextState = RETURN;               
                     4'hB: NextState = DE_REFERENCE_A;               
-                    4'hC: NextState = DE_REFERENCE_B;               
+                    4'hC: NextState = DE_REFERENCE_B; 
+                    4'hD: NextState = LOAD_IMMEDIATE_A;
+                    4'hE: NextState = LOAD_IMMEDIATE_B;
                     default:
                         NextState = CurrState;
                 endcase                   
@@ -415,12 +421,45 @@ module Processor(
                 NextState = READ_FROM_MEM_2;
                 NextProgCounter = CurrProgCounter+1;
             end
-                        
+            
+            LOAD_IMMEDIATE_A: begin
+                NextState = LOAD_IMMEDIATE_0;
+                NextRegSelect = 1'b0;
+                NextProgCounter = CurrProgCounter+2;
+            end 
+            
+            LOAD_IMMEDIATE_B: begin
+                NextState = LOAD_IMMEDIATE_0;
+                NextRegSelect = 1'b1;
+                NextProgCounter = CurrProgCounter+2;
+            end 
+            
+            LOAD_IMMEDIATE_0: begin 
+                NextState = CHOOSE_OPP;
+                if(!NextRegSelect)           
+                    NextRegA = ProgMemoryOut;       
+                else           
+                    NextRegB = ProgMemoryOut;
+            end 
+            
             default: begin
                 NextState = CurrState;
             end  
         endcase    
     end  
     
+    wire [7:0] curr_state;
+    assign curr_state = CurrState; 
+    wire [1:0] Interrupt;
+    assign Interrupt = BUS_INTERRUPTS_RAISE;
+    ila_0 debug (
+        .clk(CLK), // input wire clk
+    
+    
+        .probe0(BUS_ADDR), // input wire [7:0]  probe0  
+        .probe1(BusDataIn), // input wire [7:0]  probe1 
+        .probe2(curr_state), // input wire [7:0]  probe2
+        .probe3(Interrupt) // input wire [1:0]  probe3
+    );
     
 endmodule
