@@ -1,5 +1,4 @@
 
-from pyclbr import Function
 import sys
 import fileinput
 
@@ -159,19 +158,24 @@ def initialise_Instructions():
     instruct_sets["init"].ROM_ADDR = lineCounter
     lineCounter += curr_size
 
-    curr_size = instruct_sets["Mouse_Instruct"].num_instructions()
-
-    ROM_DATA[0xFF] = format(lineCounter, '02x')
-
-    instruct_sets["Mouse_Instruct"].ROM_ADDR = lineCounter
-    lineCounter += curr_size
-
     curr_size = instruct_sets["Timer_Instruct"].num_instructions()
 
     ROM_DATA[0xFE] = format(lineCounter, '02x')
 
     instruct_sets["Timer_Instruct"].ROM_ADDR = lineCounter
+    print("-----------TIMER INSTRUCT------------")
+    print(instruct_sets["Timer_Instruct"].ROM_ADDR)
     lineCounter += curr_size
+
+    curr_size = instruct_sets["Mouse_Instruct"].num_instructions()
+
+    ROM_DATA[0xFF] = format(lineCounter, '02x')
+
+    instruct_sets["Mouse_Instruct"].ROM_ADDR = lineCounter
+    print("-----------MOUSE INSTRUCT------------")
+    print(instruct_sets["Mouse_Instruct"].ROM_ADDR)
+    lineCounter += curr_size
+
 
 def convert_instruction_to_mem():
     global lineCounter

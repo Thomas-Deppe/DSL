@@ -2,15 +2,13 @@ init
 idle
 
 Timer_Instruct
-func Disp_Instruct
 
-Choose_Instruct_to_display
+func Choose_DISP
 
 Mouse_Instruct
 
 lw A A0
 sw A 01
-sw A 00
 
 lw B A1 
 sw B 02
@@ -18,12 +16,30 @@ sw B 02
 lw A A2
 sw A 03
 
-goto Disp_Instruct
+// sw A D0
 
-Disp_Instruct
+Choose_DISP
 
+lw A E0
+lw B 04
+beq A B DISP_X
+bltq A B DISP_Status
+bgtq A B DISP_Y
+goto Mouse_Instruct
+
+DISP_Status
 lw A 01
-sw A D0 
+sw A D0
+ret
+
+DISP_X
+lw A 02
+sw A D0
+ret
+
+DISP_Y
+lw A 03
+sw A D0
 ret
 
 // Ram allocation:
@@ -31,3 +47,4 @@ ret
 // 0x01 - Mouse Status
 // 0x02 - MouseX 
 // 0x03 - MouseY
+// 0x04 - Choose Display
