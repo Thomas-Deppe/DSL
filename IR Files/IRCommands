@@ -1,0 +1,18 @@
+IR commands are 8-bit words, the 4 ms-bits choose which car is to be controlled and the 4 lsbs control the direction.
+The cars are selected with each of the following commands:
+
+Red Car     - 1000
+Green Car   - 0100
+Yellow Car  - 0010
+Blue Car    - 0001
+
+The directions are selected with the following commands, they can be combined for more complex directions:
+
+Neutral     - 0000
+Right       - 0001
+Left        - 0010
+Backwards   - 0100
+Forwards    - 1000
+
+So an example command for a red car going backwards would be 10000100 or 0x84
+A yellow car going forward left would be 00101010 or 0x2A
