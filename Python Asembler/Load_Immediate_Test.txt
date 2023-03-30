@@ -1,4 +1,5 @@
 init
+func Test_Instruct
 idle
 
 Mouse_Instruct

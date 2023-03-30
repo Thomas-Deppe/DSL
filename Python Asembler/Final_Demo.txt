@@ -1,0 +1,40 @@
+init
+lw A 02 //Sets screens initial colour
+sw A B0
+goto Column1
+idle
+
+Loop
+
+CheckX 
+lw A 00 //Loads in the x coordinate
+li B A0 //gets value of max X
+breq CheckY
+inc A A 
+sw A 00
+goto Loop
+
+// Called at the end of each row
+CheckY
+lw A 01 
+li B 78
+breq ?
+inc A A
+sw A 01
+goto Loop
+
+Timer_Instruct
+
+
+
+
+
+
+Mouse_Instruct
+
+
+//RAM Allocation
+//0x00 X pixel address
+//0x01 Y pixel address
+//0x02 Colour
+//0x03 

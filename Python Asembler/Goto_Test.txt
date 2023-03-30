@@ -1,0 +1,13 @@
+init
+idle 
+
+Timer_Instruct
+
+goto DISP
+
+Mouse_Instruct
+
+DISP
+li A 25
+sw A D0
+idle

@@ -249,8 +249,8 @@ def print_to_file(outFile):
 def compile(): 
     #inFile = sys.argv[1]
     #outFile = sys.argv[2]
-    inFile = "Load_Immediate_Test.txt"
-    outFile = "ROM_IMMEDIATE.txt"
+    inFile = "Final_Demo.txt"
+    outFile = "FINAL.txt"
     read_instructions(inFile)
     initialise_Instructions()
     convert_instruction_to_mem()

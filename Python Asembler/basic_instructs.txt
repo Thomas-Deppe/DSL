@@ -4,14 +4,13 @@ idle
 Mouse_Instruct
 
 Timer_Instruct
+goto Branch_Instruct_equals
 
 Branch_Instruct_equals
 
 inc A A //Increments A and stores to A
 
 sw A 01 //Stores A into address 02
-
-deref A //Reads memory ADDR stored in reg A
 
 lw B 01 //loads value at addres 02 to reg B
 
@@ -22,12 +21,15 @@ idle
 Branch_Instruct_Greater
 
 inc A A //Increments A and stores to A
+deref A //Reads memory ADDR stored in reg A
 
 bgtq A B Branch_Instruct_Less //Branch to address. load to Mouse_Instruct with ADDR if reg A greater than reg B
 
 idle
 
 Branch_Instruct_Less
+
+lw A 01
 
 dec A A
 
@@ -40,10 +42,7 @@ idle //Goes to idle state
 Call_Instruct
 
 func ALU_Instruct
-
-deref B //Reads memory ADDR stored in reg B
-
-deref A //Reads memory ADDR stored in reg A
+idle
 
 goto Mouse_Instruct
 
@@ -52,6 +51,8 @@ ALU_Instruct
 add A B
 
 sub B A
+
+deref B
 
 mul A B
 
