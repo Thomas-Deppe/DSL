@@ -250,7 +250,7 @@ def print_to_file(outFile):
 def compile(): 
     #inFile = sys.argv[1]
     #outFile = sys.argv[2]
-    inFile = "Simple_IR_Test.txt"
+    inFile = "Mouse_IR.txt"
     outFile = "MOUSE_IR_TEST.txt"
     read_instructions(inFile)
     initialise_Instructions()

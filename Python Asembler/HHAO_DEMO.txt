@@ -1,0 +1,87 @@
+init
+li A F0
+sw A B0
+
+BEGIN
+lw A 01
+li B 78
+breq A B Write_VGA_Data
+li B 32
+sw A B2
+sw B B1
+sw A B3
+inc A 
+sw A 01
+goto BEGIN
+
+Write_VGA_Data
+li A 00
+sw A 02
+goto CheckY
+
+CheckY
+lw A 02
+li B 78
+breq A B RESET_Y
+li B 6E
+sw A B2
+sw B B1
+li B 01
+sw B B3
+inc A 
+sw A 01
+goto CheckY
+
+RESET_Y
+li A 00
+sw A 01
+goto CheckX
+
+CheckX
+lw A 00
+li B A0
+breq A B RESET_X
+li B 28
+sw A B1
+sw B B2
+li B 01
+sw B B3
+inc A 
+sw A 00
+goto CheckX
+
+RESET_X
+li A 00
+sw A 00
+goto CheckX2
+
+CheckX2
+lw A 00
+lw B A0
+breq A B RESET_X2
+li B 50 
+sw A B1
+sw B B2
+li B 01
+sw B B3
+inc A 
+sw A 00
+goto CheckX2
+
+RESET_X2
+li A 00 
+sw A 00
+lw A 00
+
+
+
+
+
+
+
+
+
+// RAM allocation
+// 0x00 X 
+// 0x01 Y
+// 0x02 Colours
