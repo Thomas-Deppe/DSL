@@ -1,0 +1,55 @@
+init
+lw A 00
+sw A B0
+
+Timer_Instruct
+Mouse_Instruct
+
+LOOP
+lw A 01 
+inc A
+sw A 01
+goto CheckX
+
+CheckX
+lw A 01
+li B 32
+breq A B Write_VGA_Data
+li B 6E 
+breq A B Write_VGA_Data
+li B A0
+breq A B RESET
+goto LOOP
+
+RESET
+li A 00
+sw A 01
+lw B 03
+inc B
+sw B 03
+sw B D0
+goto CheckY
+
+CheckY
+lw A 03
+li B 28
+breq A B Write_VGA_Data
+li B 50
+breq A B Write_VGA_Data
+li B 78
+breq A B TRANSIT
+goto LOOP
+
+Write_VGA_Data
+lw A 01
+lw B 03
+sw A B1
+sw B B2
+goto LOOP
+
+TRANSIT
+lw A 00
+inc A 
+sw A B0
+sw A 00
+idle

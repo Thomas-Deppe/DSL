@@ -60,6 +60,8 @@ class Instruction:
             elif reg1 == "B":
                 self.ROM_instruct = "6"+str((ord(self.target)-65)+4)
             #print(self.ROM_instruct)
+        elif instruction == "and":
+            self.ROM_instruct = "C"+str((ord(self.target)-65)+4)
         elif instruction == "dec":
             if reg1 == "A":
                 self.ROM_instruct = "7"+str((ord(self.target)-65)+4)
@@ -96,7 +98,6 @@ class Instruction:
             elif reg1 == "B":
                 self.ROM_instruct = "0E"
         
-        
     def size(self):
         if self.instruction in ["lw", "sw","breq","bgtq","bltq","goto","func", "li"]:
             return 2
@@ -127,7 +128,7 @@ def read_instructions(infile):
                 instruct_sets[current_instruct].instructions.append(
                     Instruction(instruction=line[0], reg1=line[1], reg2=line[2], target=line[1])
                 )
-            elif line[0] in ["sl","sr","inc","dec"]:
+            elif line[0] in ["sl","sr","inc","dec", "and"]:
                 instruct_sets[current_instruct].instructions.append(
                     Instruction(instruction=line[0], reg1=line[1], target=line[1])
                 )
@@ -249,8 +250,8 @@ def print_to_file(outFile):
 def compile(): 
     #inFile = sys.argv[1]
     #outFile = sys.argv[2]
-    inFile = "Final_Demo.txt"
-    outFile = "FINAL.txt"
+    inFile = "Simple_IR_Test.txt"
+    outFile = "MOUSE_IR_TEST.txt"
     read_instructions(inFile)
     initialise_Instructions()
     convert_instruction_to_mem()
