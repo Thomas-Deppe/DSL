@@ -460,8 +460,8 @@ module Processor(
         .clk(CLK), // input wire clk
     
     
-        .probe0(ROM_ADDRESS), // input wire [7:0]  probe0  
-        .probe1(ROM_DATA), // input wire [7:0]  probe1 
+        .probe0(ActualAddress), // input wire [7:0]  probe0  
+        .probe1(ProgMemoryOut), // input wire [7:0]  probe1 
         .probe2(curr_state), // input wire [7:0]  probe2
         .probe3(Interrupt) // input wire [1:0]  probe3
     );*/

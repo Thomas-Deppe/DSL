@@ -29,7 +29,7 @@ module TenHz_cnt(
             countValue <= 0;
         end
         else begin
-            if (countValue == 3000000) begin // Reset the count and output 1 when the max is reached. 10000000
+            if (countValue == 10000000) begin // Reset the count and output 1 when the max is reached. 10000000
                 triggerOut <= 1;
                 countValue <= 0;
             end

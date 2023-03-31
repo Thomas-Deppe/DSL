@@ -62,7 +62,7 @@ module VGA(
                     .A_CLK(CLK),
                     .A_ADDR(FB_ADDR),
                     .A_DATA_IN(FB_DATA_IN),
-                    .A_WE(FB_WE),
+                    .A_WE(BUS_WE),
                     .B_CLK(DPR_CLK),
                     .B_ADDR(B_ADDR),
                     
@@ -104,8 +104,6 @@ module VGA(
         else if (((BUS_ADDR == VGAXAddr)||(BUS_ADDR == VGAYAddr)) & BUS_WE) begin
             FB_DATA_IN <= 1;
         end
-        else
-            FB_DATA_IN <= 0;
     end
     
     /*always@(posedge CLK) begin

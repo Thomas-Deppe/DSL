@@ -33,7 +33,7 @@ module ROM(
     reg [7:0] ROM [2**RAMAddrWidth-1:0]; 
     // Load program 
     //initial $readmemh("Complete_Demo_ROM.txt", ROM); 
-    initial $readmemh("C:/Users/Thomas Deppe/DSL_Projects/Mouse_Demo_Processor/Mouse_Demo_Processor.srcs/sources_1/new/ROM_MOUSE_DEMO.mem", ROM);     
+    initial $readmemh("C:/Users/Thomas Deppe/DSL_Projects/Final_Processor/Final_Processor.srcs/sources_1/new/Mouse_IR_Test.mem", ROM);     
     //single port ram 
     always@(posedge CLK) 
         DATA <= ROM[ADDR];

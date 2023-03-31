@@ -41,7 +41,7 @@ module RAM(
     //Memory  
     reg [7:0] Mem [2**RAMAddrWidth-1:0];  
     // Initialise the memory for data preloading, initialising variables, and declaring constants 
-    initial $readmemh("C:/Users/Thomas Deppe/DSL_Projects/Mouse_Demo_Processor/Mouse_Demo_Processor.srcs/sources_1/new/RAM_DEMO.mem", Mem);
+    initial $readmemh("C:/Users/Thomas Deppe/DSL_Projects/Final_Processor/Final_Processor.srcs/sources_1/new/RAM_MOUSE_IR.mem", Mem);
     
     //single port ram  
     always@(posedge CLK) begin   
