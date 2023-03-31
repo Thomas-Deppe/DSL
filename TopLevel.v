@@ -27,11 +27,17 @@ module TopLevel(
             //Inputs for interfacing with the mouse
             inout CLK_MOUSE,
             inout DATA_MOUSE,
+            //VGA Outputs
+            output HS,                  // horizontal sync output
+            output VS,                  // vertical sync output
+            output [7:0] COLOUR_OUT,      // vga color output 
             //Inputs and outputs for display
             input  [7:0] SLIDE_SWITCHES,
             output [3:0] SEG_SELECT_OUT,
             output [7:0] DISP_OUT,
-            output [15:0] LEDS
+            output [15:0] LEDS,
+            //IR LED
+            output IR_LED
     );
     
     wire Bus_we;
@@ -92,6 +98,7 @@ module TopLevel(
             .BUS_ADDR(Bus_Addr),
             .BUS_WE(Bus_we)
             );
+            
     //Instantiate mouse bus 
     Mouse_BUS mouse(
             .CLK(CLK),
@@ -104,6 +111,28 @@ module TopLevel(
             .BUS_INTERRUPT_ACK(Bus_Interrupt_ACK[0]),
             .BUS_WE(Bus_we)
             );
+            
+    // Instantiate the VGA
+    VGA VGA(
+            .CLK(CLK),
+            .RESET(RESET),               // board clock: 100MHz
+            .BUS_WE(Bus_we),
+            .BUS_ADDR(Bus_Addr),
+            .BUS_DATA(Bus_Data),   // VGA config colour 16 bits
+            .HS(HS),           // horizontal sync output
+            .VS(VS),           // vertical sync output
+            .COLOUR_OUT(COLOUR_OUT)    // vga color output 
+            );
+            
+    IRTransmitter IRTransmitterWrapper (
+            .CLK(CLK),
+            .RESET(RESET),
+            .BUS_WE(Bus_we),
+            .BUS_DATA(Bus_Data),
+            .BUS_ADDR(Bus_Addr),
+            .IR_LED(IR_LED)
+            );
+    
     //Used to display the hexadeicmal output. Called Disp_Decimal as it was copied from the decimal timer 
     //in DSL 3
     Disp_Decimal seg7(
@@ -115,6 +144,7 @@ module TopLevel(
             .BUS_DATA(Bus_Data),
             .BUS_ADDR(Bus_Addr)
             );
+            
     //Instantiate the LED bus to write data to the LEDS
     LEDS_BUS led(
             .CLK(CLK),
@@ -124,6 +154,7 @@ module TopLevel(
             .BUS_ADDR(Bus_Addr),
             .BUS_WE(Bus_we)
             );
+            
     //Instantiates the slide switches bus to read data from the LEDS
     Slideswitches_BUS slideSwitches(
             .CLK(CLK),
