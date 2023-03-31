@@ -1,0 +1,61 @@
+init
+idle
+
+Timer_Instruct //Timer interrupt starts here
+
+func Choose_DISP //Chooses what to display on the 7 segment display
+
+Mouse_Instruct //Mouse interrupt starts here 
+
+lw A A0 //Load mouse status
+sw A 01
+
+lw B A1 //Load mouse X
+sw B 02
+
+lw A A2 //Load mouse Y
+sw A 03
+
+idle //Goto Idle
+
+Choose_DISP
+
+lw A E0 //Loads the value from the slide switches
+lw B 04 //Loads constant 2 
+breq A B DISP_X //Checks if slide switch is = 2
+bltq A B DISP_Status //Checks if slide switch < 2
+bgtq A B DISP_Y // Checks if slide switch >2
+goto Mouse_Instruct
+
+DISP_Status
+lw A 01
+sw A D0
+lw B 02
+sw B C0
+lw B 03
+sw B C1
+ret
+
+DISP_X
+lw A 02
+sw A D0
+lw B 01
+sw B C0
+lw B 03
+sw B C1
+ret
+
+DISP_Y
+lw A 03
+sw A D0
+lw B 01
+sw B C0
+lw B 02
+sw B C1
+ret
+
+// Ram allocation:
+// 0x00 - Current value to display on seven segment display
+// 0x01 - Mouse Status
+// 0x02 - MouseX 
+// 0x03 - MouseY
