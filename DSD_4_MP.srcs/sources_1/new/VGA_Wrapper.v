@@ -28,16 +28,17 @@ module VGA(
     // setup the base addresses
     parameter [7:0] VGABaseAddr  = 8'hB0,
                     VGAXAddr = 8'hB1,
-                    VGAYAddr = 8'hB2;
+                    VGAYAddr = 8'hB2,
+                    VGAEAddr = 8'hB3,
+                    VGAOAddr = 8'hB4;
     
     wire VGA_Data;
     wire [14:0] B_ADDR;
     wire DPR_CLK;
-    
     reg  [15:0] CONFIG_COL;
     reg [14:0] FB_ADDR;
     reg FB_DATA_IN;
-                      
+                       
     // Instantiate VGA
     VGA_Sig_Gen vga(
                     //inputs
@@ -52,7 +53,7 @@ module VGA(
                     .VS(VS),
                     .COLOUR_OUT(COLOUR_OUT)
                    );
-                         
+                          
     // Instantiate Frame Buffer
     VGA_Buffer Frame_Buffer(
                     //inputs
@@ -67,7 +68,7 @@ module VGA(
                     //.A_DATA_OUT(VGA_Data),
                     .B_DATA(VGA_Data)
                     );
-                    
+                    //FLAG VARIABLE WITH ADDRESS 3
    //For Address B0, changes colour to BUS_DATA
     always@(posedge CLK) begin
         if (RESET)
@@ -76,9 +77,9 @@ module VGA(
             CONFIG_COL[15:8] <= BUS_DATA;
             CONFIG_COL[7:0]  <= ~BUS_DATA;
         end
-    end
-    
-    //For Address B1, assigns bus data to X axis address
+    end                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+         //For Address B1, assigns bus data to X axis address
     always@(posedge CLK) begin
         if (RESET)
             FB_ADDR[7:0] = 0;
@@ -94,27 +95,22 @@ module VGA(
             FB_ADDR[14:8] <= BUS_DATA[6:0];
     end
     
-    //Flips on and off the enable for chequered pattern
+    /*Flips on and off the enable for chequered pattern
     always@(posedge CLK) begin
         if (RESET)
             FB_DATA_IN <= 0;
         else if (((BUS_ADDR == VGAXAddr)||(BUS_ADDR == VGAYAddr)) & BUS_WE) begin
             FB_DATA_IN <= 1;
         end
-        else
-            FB_DATA_IN <= 0;
-    end
-    
-    /* can cheat the microprocessor
-    reg [7:0] fb_count = 0;
-    
-    always@(posedge CLK) begin
-        fb_count = fb_count + 1'b1;
-        FB_DATA_IN = fb_count[0];
-        if (fb_count == 8'b11111111)
-            fb_count = 0;
-        else
-            fb_count = fb_count;
     end*/
     
+        always@(posedge CLK) begin
+        if (RESET)
+            FB_DATA_IN <= 0;
+        else if ((BUS_WE) & (BUS_ADDR == VGAEAddr))
+            FB_DATA_IN <= 1;
+        else if ((BUS_WE) & (BUS_ADDR == VGAOAddr))
+            FB_DATA_IN <= 0;
+    end
+
 endmodule
