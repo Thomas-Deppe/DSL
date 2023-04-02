@@ -25,7 +25,7 @@ module IRTransmitterSM(
 	parameter GapSize = 24;
 	parameter AssertBurstSize = 48;
 	parameter DeAssertBurstSize = 24;
-	parameter FrequencyCount = 2778;
+	parameter FrequencyCount = 1388;
 	
 	//Create the pulse signal
 	reg Carrier = 1'b0;

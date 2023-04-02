@@ -28,11 +28,14 @@ module IRTransmitter(
     
     // Read in a new command and car selection if ADDR_ENABLE is true, otherwise put the car in neutral.
     always@(posedge CLK) begin
-        if ((BUS_ADDR == BASE_ADDR) && BUS_WE) begin
+        if (RESET) begin
+            CAR_SELECT = 4'b0000;
+            COMMAND = 4'b0000;
+        end
+        else if ((BUS_ADDR == BASE_ADDR) && BUS_WE) begin
             CAR_SELECT = BUS_DATA[7:4];
             COMMAND = BUS_DATA[3:0];
         end
-        else COMMAND = 4'b0000;
     end
            
     // Wires to connect each counter trigger to each car SM     
@@ -55,16 +58,16 @@ module IRTransmitter(
     reg IR_LED_OUT;
     
     // Instantiations of each colour of car
-    IRTransmitterSM #(.StartBurstSize(191), .GapSize(25), .CarSelectBurstSize(47), .AssertBurstSize(47), .DeAssertBurstSize(22), .FrequencyCount(2778))
+    IRTransmitterSM #(.StartBurstSize(191), .GapSize(25), .CarSelectBurstSize(47), .AssertBurstSize(47), .DeAssertBurstSize(22), .FrequencyCount(1388))
         BLUCarSM (.CLK(CLK), .RESET(RESET), .ENABLE(CAR_SELECT[0]), .COMMAND(COMMAND), .SEND_PACKET(SEND_PACKET_BLU), .IR_LED(IR_LED_BLU));
         
-    IRTransmitterSM #(.StartBurstSize(88),  .GapSize(40), .CarSelectBurstSize(22), .AssertBurstSize(44), .DeAssertBurstSize(22), .FrequencyCount(2500))
+    IRTransmitterSM #(.StartBurstSize(88),  .GapSize(40), .CarSelectBurstSize(22), .AssertBurstSize(44), .DeAssertBurstSize(22), .FrequencyCount(1250))
         YLWCarSM (.CLK(CLK), .RESET(RESET), .ENABLE(CAR_SELECT[1]), .COMMAND(COMMAND), .SEND_PACKET(SEND_PACKET_YLW), .IR_LED(IR_LED_YLW));
             
-    IRTransmitterSM #(.StartBurstSize(88),  .GapSize(40), .CarSelectBurstSize(44), .AssertBurstSize(44), .DeAssertBurstSize(22), .FrequencyCount(2667))
+    IRTransmitterSM #(.StartBurstSize(88),  .GapSize(40), .CarSelectBurstSize(44), .AssertBurstSize(44), .DeAssertBurstSize(22), .FrequencyCount(1333))
         GRNCarSM (.CLK(CLK), .RESET(RESET), .ENABLE(CAR_SELECT[2]), .COMMAND(COMMAND), .SEND_PACKET(SEND_PACKET_GRN), .IR_LED(IR_LED_GRN));
             
-    IRTransmitterSM #(.StartBurstSize(192), .GapSize(24), .CarSelectBurstSize(24), .AssertBurstSize(48), .DeAssertBurstSize(24), .FrequencyCount(2778))
+    IRTransmitterSM #(.StartBurstSize(192), .GapSize(24), .CarSelectBurstSize(24), .AssertBurstSize(48), .DeAssertBurstSize(24), .FrequencyCount(1388))
         REDCarSM (.CLK(CLK), .RESET(RESET), .ENABLE(CAR_SELECT[3]), .COMMAND(COMMAND), .SEND_PACKET(SEND_PACKET_RED), .IR_LED(IR_LED_RED));
         
     // Output assignments
