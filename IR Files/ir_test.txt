@@ -1,0 +1,137 @@
+init
+idle
+
+Timer_Instruct //Timer interrupt starts here
+lw A E1 //Load Slide Switch Values
+lw B 05 //Load current IR command
+add A B //Add Car select (xxxx0000) to command (0000xxxx)
+sw A 05 //Save full command
+sw A 90 //Write current IR command
+
+func Choose_DISP //Chooses what to display on the 7 segment display
+
+Mouse_Instruct //Mouse interrupt starts here 
+
+Load_Status
+lw A A1 //Load mouse X
+sw A 02
+li B 32 //Check if mouse is on left screen side
+bltq A B LftCol
+li B 6E //Check if mouse is on right screen side
+bgtq A B RgtCol 
+goto MidCol //Must be middle otherwise
+
+Load_Else
+sw A 05 //Save current IR command
+lw A A0 //Load mouse status
+sw A 01
+
+idle //Goto Idle
+
+Choose_DISP
+
+lw A E0 //Loads the value from the slide switches
+li B 02 //Loads constant 2 
+breq A B DISP_X //Checks if slide switch is = 2
+bltq A B DISP_Status //Checks if slide switch < 2
+li B 04 //Loads constant 4 
+breq A B DISP_Y //Checks if slide switch is = 4
+bgtq A B DISP_IR // Checks if slide switch >4
+goto Mouse_Instruct
+
+DISP_Status
+lw A 01
+sw A D0
+lw B 02
+sw B C0
+lw B 03
+sw B C1
+ret
+
+DISP_X
+lw A 02
+sw A D0
+lw B 01
+sw B C0
+lw B 03
+sw B C1
+ret
+
+DISP_Y
+lw A 03
+sw A D0
+lw B 01
+sw B C0
+lw B 02
+sw B C1
+ret
+
+DISP_IR
+lw A 05 //Disp IR Command on 7-seg
+sw A D0
+lw B E0 //Disp lower switches
+sw B C0
+lw B E1 //Disp upper switches
+sw B C1
+ret
+
+LftCol
+lw A A2 //Load mouse Y
+sw A 03
+li B 29 //Check if mouse is in upper area
+bltq A B FwdLft
+li B 51 //Check if mouse is in lower area
+bgtq A B BwdLft
+li A 02 //Apply left command otherwise
+goto Load_Else
+
+RgtCol
+lw A A2 //Load mouse Y
+sw A 03
+li B 29
+bltq A B FwdRgt
+li B 51
+bgtq A B BwdRgt
+li A 01
+goto Load_Else
+
+MidCol
+lw A A2 //Load mouse Y
+sw A 03
+li B 29
+bltq A B Fwd
+li B 51
+bgtq A B Bwd
+li A 00
+goto Load_Else
+
+Fwd //Apply forward command
+li A 08
+goto Load_Else
+
+Bwd
+li A 04
+goto Load_Else
+
+FwdLft
+li A 0A
+goto Load_Else
+
+BwdLft
+li A 06
+goto Load_Else
+
+FwdRgt
+li A 09
+goto Load_Else
+
+BwdRgt
+li A 05
+goto Load_Else
+
+// Ram allocation:
+// 0x00 - Current value to display on seven segment display
+// 0x01 - Mouse Status
+// 0x02 - MouseX 
+// 0x03 - MouseY
+// 0x05 - IR Command
