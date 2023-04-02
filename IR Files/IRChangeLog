@@ -1,0 +1,6 @@
+Added ROM demo that runs off of mouse demo and given VGA border values to assert IR commands depending on mouse location.
+Added option to show IR commands on 7-seg display and slide switch states on the LEDS.
+Added high address to slide switch verilog file (0xE1) so the highest 4 switches can control the car select.
+Changed top level and wrapper to accomodate 16 bit slide switch input.
+Mouse Y address should be changed as VGA demo and IR both control like flight sim (ie. bottom is forward, top is backward).
+Current test ROM file is already large, would recommend reducing 7-seg display options for final demo. IR command logic could possibly be optimised?
