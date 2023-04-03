@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="synth_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1680530077">
+  <File Type="RDS-DCP" Name="TopLevel.dcp"/>
+  <File Type="RUN-CONSTRS" Name="$PDATADIR/runs/synth_1/constrs_in.xml"/>
+  <File Type="RDS-UTIL-PB" Name="TopLevel_utilization_synth.pb"/>
+  <File Type="RUN-SRCS" Name="$PDATADIR/runs/synth_1/sources.xml"/>
+  <File Type="RDS-PROPCONSTRS" Name="TopLevel_drc_synth.rpt"/>
+  <File Type="PA-TCL" Name="TopLevel.tcl"/>
+  <File Type="RUN-STRAT" Name="$PDATADIR/runs/synth_1/synth_1.psg"/>
+  <File Type="RDS-RDS" Name="TopLevel.vds"/>
+  <File Type="RDS-UTIL" Name="TopLevel_utilization_synth.rpt"/>
+  <File Type="VDS-TIMINGSUMMARY" Name="TopLevel_timing_summary_synth.rpt"/>
+  <File Type="VDS-TIMING-PB" Name="TopLevel_timing_summary_synth.pb"/>
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PSRCDIR/sources_1/imports/new/MouseTransmitter.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/MouseTransmitter.v"/>
+        <Attr Name="ImportTime" Val="1679993519"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/MouseReceiver.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/MouseReceiver.v"/>
+        <Attr Name="ImportTime" Val="1679993519"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/MouseMasterSM.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/MouseMasterSM.v"/>
+        <Attr Name="ImportTime" Val="1679993519"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/Generic_counter.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/Generic_counter.v"/>
+        <Attr Name="ImportTime" Val="1679993517"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/seg7Decoder.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/seg7Decoder.v"/>
+        <Attr Name="ImportTime" Val="1679993520"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/Multiplexer_4way.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/Multiplexer_4way.v"/>
+        <Attr Name="ImportTime" Val="1679993519"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/VGA_Sig_Gen.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/VGA_Sig_Gen.v"/>
+        <Attr Name="ImportTime" Val="1679993517"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/Frame_Buffer.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/Frame_Buffer.v"/>
+        <Attr Name="ImportTime" Val="1679993517"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/TenHz_cnt.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/IRTransmitterSM.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/MouseTransceiver.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/MouseTransceiver.v"/>
+        <Attr Name="ImportTime" Val="1679993519"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/ALU.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/ALU.v"/>
+        <Attr Name="ImportTime" Val="1679993519"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/Disp_Seg7.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/Slideswitches_BUS.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/Slideswitches_BUS.v"/>
+        <Attr Name="ImportTime" Val="1679993520"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/VGA_Wrapper.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/VGA_Wrapper.v"/>
+        <Attr Name="ImportTime" Val="1679993517"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/IRTransmitter.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/Timer.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/Timer.v"/>
+        <Attr Name="ImportTime" Val="1679993520"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/ROM.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/ROM.v"/>
+        <Attr Name="ImportTime" Val="1679993520"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/RAM.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/RAM.v"/>
+        <Attr Name="ImportTime" Val="1679993519"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/Processor.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/Processor.v"/>
+        <Attr Name="ImportTime" Val="1679993519"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/Mouse_BUS.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/Mouse_BUS.v"/>
+        <Attr Name="ImportTime" Val="1679993519"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/LEDS_BUS.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/LEDS_BUS.v"/>
+        <Attr Name="ImportTime" Val="1679993519"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/new/TopLevel.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PSRCDIR/sources_1/new/TopLevel.v"/>
+        <Attr Name="ImportTime" Val="1679993520"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/ROM_COMPLETE.mem">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/RAM_COMPLETE.mem">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="TopLevel"/>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
+    <Filter Type="Constrs"/>
+    <File Path="$PSRCDIR/constrs_1/new/Final_XDC.xdc">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="ConstrsType" Val="XDC"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2015"/>
+    <Step Id="synth_design"/>
+  </Strategy>
+  <BlockFileSet Type="BlockSrcs" Name="ila_0"/>
+</GenRun>
