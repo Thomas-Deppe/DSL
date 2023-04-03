@@ -195,7 +195,17 @@ def convert_instruction_to_mem():
 
     for ins in instruct_sets.values():
 
-        if ins.name not in ["init", "Mouse_Instruct", "Timer_Instruct"]:
+        if ins.name in ["init", "Mouse_Instruct", "Timer_Instruct"]:
+            curr_size = ins.num_instructions()
+            print(ins.name, curr_size)
+            if ins.name in ["Timer_Instruct"]:
+                ROM_DATA[0xFE] = format(lineCounter, '02x')
+            elif ins.name in ["Mouse_Instruct"]:
+                ROM_DATA[0xFF] = format(lineCounter, '02x')
+
+            ins.ROM_ADDR = lineCounter
+            lineCounter += curr_size
+        else:
             curr_size = ins.num_instructions()
             print(ins.name, curr_size)
 
@@ -227,7 +237,7 @@ def convert_instruction_to_mem():
                 if len(x.target) < 2:
                     x.target = "0" + x.target
                 ROM_DATA[ins.ROM_ADDR + offset + 1] = x.target 
-
+                print(ROM_DATA[ins.ROM_ADDR + offset+1])
                 offset += 2
             else: 
                 ROM_DATA[ins.ROM_ADDR + offset] = x.ROM_instruct
@@ -235,6 +245,8 @@ def convert_instruction_to_mem():
                 offset += 1
 
     print(ROM_DATA)
+    print(ROM_DATA[4])
+    print(ROM_DATA[75])
     print("-----------Finished converting-----------")
 
 def print_to_file(outFile):
@@ -250,10 +262,10 @@ def print_to_file(outFile):
 def compile(): 
     #inFile = sys.argv[1]
     #outFile = sys.argv[2]
-    inFile = "Mouse_IR.txt"
-    outFile = "MOUSE_IR_TEST.txt"
+    inFile = "Final_Demo.txt"
+    outFile = "VGA_GRID_TEST.txt"
     read_instructions(inFile)
-    initialise_Instructions()
+    #initialise_Instructions()
     convert_instruction_to_mem()
     print_to_file(outFile)
 

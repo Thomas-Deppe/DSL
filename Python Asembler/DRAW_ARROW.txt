@@ -6,6 +6,7 @@ Timer_Instruct
 LOOP_X
 lw A 00 //Loads X from RAM
 li B 32 //Checks X1 Bound
+sw B B5
 breq A B WriteColumn //If on bound write to VGA
 li B 6E //Checks X2 Bound
 breq A B WriteColumn //If on bound write to VGA
@@ -42,7 +43,7 @@ li B 28 //Checks Y1 Bound
 breq A B WriteRow //If on bound write to VGA
 li B 50 //Checks Y2 Bound
 breq A B WriteRow //If on bound write to VGA
-li B 79
+li B 78
 breq A B RESET_Y
 goto LOOP_X
 
@@ -59,18 +60,6 @@ goto LOOP_Y
 RESET_Y
 li A 00 
 sw A 01
-goto COLOUR_SELECT
-
-COLOUR_SELECT
-lw A E1
-li B 00
-bgtq A B NEW_COLOUR
-lw A 02
-sw A B0
-goto CAR_SELECT
-
-NEW_COLOUR
-sw A B0
 goto CAR_SELECT
 
 CAR_SELECT
@@ -91,12 +80,9 @@ sw B B4
 lw A A1 
 sw A 04
 lw B A2
-li A 77
+li A 78
 sub A B 
 sw A 05
-lw A A0
-li B 0A 
-breq A B NEUTRAL
 goto DETECTION
 
 DISP_MOUSE
@@ -182,7 +168,6 @@ sw A 90
 sw A C1
 sw A D0
 sw A 06
-sw A D2
 goto DISP_MOUSE
 
 // RAM Allocation

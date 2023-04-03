@@ -1,0 +1,94 @@
+init
+lw A 02 //Sets screens initial colour
+sw A B0
+
+Timer_Instruct
+LOOP_X
+lw A 00 //Loads X from RAM
+li B 32 //Checks X1 Bound
+breq A B WriteColumn //If on bound write to VGA
+li B 6E //Checks X2 Bound
+breq A B WriteColumn //If on bound write to VGA
+li B A0
+breq A B RESET_X
+inc A
+sw A 00
+goto LOOP_X
+
+WriteColumn
+lw A 00
+sw A B1 //Writes X to the VGA
+lw B 01 //Reads Y from RAM
+sw B B2 //Writes Y to the VGA
+sw B B3 //Enable colour change
+inc A
+sw A 00
+goto LOOP_X
+
+RESET_X
+li A 00 
+sw A 00 
+lw B 01
+inc B
+sw B 01
+goto LOOP_Y
+
+LOOP_Y
+lw A 00 
+li B A0 
+breq A B RESET_X
+lw A 01 //Loads Y from RAM
+li B 28 //Checks Y1 Bound
+breq A B WriteRow //If on bound write to VGA
+li B 50 //Checks Y2 Bound
+breq A B WriteRow //If on bound write to VGA
+li B 79
+breq A B RESET_Y
+goto LOOP_X
+
+WriteRow
+lw A 01
+sw A B2 //Writes Y to the VGA
+lw B 00 //Loads X from RAM
+sw B B1 // Writes X to VGA
+sw B B3 //Enables colour change
+inc B
+sw B 00
+goto LOOP_Y
+
+RESET_Y
+li A 00 
+sw A 01
+idle
+
+Mouse_Instruct
+lw A 04 
+lw B 05 
+sw A B1
+sw B B2
+sw B B4
+lw A A1 
+sw A 04
+lw B A2
+li A 78
+sub A B 
+sw A 05
+goto DISP_MOUSE
+
+DISP_MOUSE
+lw A 04
+lw B 05
+sw A B1
+sw B B2
+sw B B3
+goto Timer_Instruct
+
+// RAM Allocation
+// 0x00 X pixel address
+// 0x01 Y pixel address
+// 0x02 Colour
+// 0x03 Mouse Status
+// 0x04 Mouse X 
+// 0x05 Mouse Y
+// 0x06 Prev Mouse X
+// 0x07 Prev Mouse Y

@@ -16,7 +16,7 @@ sw A 00
 goto LOOP_X
 
 WriteColumn
-// lw A 00
+lw A 00
 sw A B1 //Writes X to the VGA
 lw B 01 //Reads Y from RAM
 sw B B2 //Writes Y to the VGA
@@ -47,7 +47,7 @@ breq A B RESET_Y
 goto LOOP_X
 
 WriteRow
-// lw A 01
+lw A 01
 sw A B2 //Writes Y to the VGA
 lw B 00 //Loads X from RAM
 sw B B1 // Writes X to VGA
@@ -59,27 +59,6 @@ goto LOOP_Y
 RESET_Y
 li A 00 
 sw A 01
-goto COLOUR_SELECT
-
-COLOUR_SELECT
-lw A E1
-li B 00
-bgtq A B NEW_COLOUR
-lw A 02
-sw A B0
-goto CAR_SELECT
-
-NEW_COLOUR
-sw A B0
-goto CAR_SELECT
-
-CAR_SELECT
-lw A E0
-sl A
-sl A
-sl A 
-sl A
-sw A 0F
 idle
 
 Mouse_Instruct
@@ -91,12 +70,9 @@ sw B B4
 lw A A1 
 sw A 04
 lw B A2
-li A 77
+li A 78
 sub A B 
 sw A 05
-lw A A0
-li B 0A 
-breq A B NEUTRAL
 goto DETECTION
 
 DISP_MOUSE
@@ -113,7 +89,8 @@ li B 32
 bltq A B REGION1
 li B 6E
 bltq A B REGION2
-goto REGION3
+li B A0
+bltq A B REGION3
 
 REGION1
 lw A 05
@@ -121,7 +98,8 @@ li B 28
 bltq A B LEFT_FORWARD
 li B 50 
 bltq A B LEFT
-goto LEFT_BACKWARDS
+li B 78
+bltq A B LEFT_BACKWARDS
 
 REGION2
 lw A 05
@@ -129,7 +107,8 @@ li B 28
 bltq A B FORWARD
 li B 50 
 bltq A B NEUTRAL
-goto BACKWARDS
+li B 78
+bltq A B BACKWARDS
 
 REGION3
 lw A 05
@@ -137,52 +116,66 @@ li B 28
 bltq A B RIGHT_FORWARD
 li B 50 
 bltq A B RIGHT
-goto RIGHT_BACKWARDS
+li B 78
+bltq A B RIGHT_BACKWARDS
 
 LEFT_FORWARD
-lw A 0B
+lw A 07
+lw B 09 
+add A B 
+sw A 06
 goto SEND_COMMAND
 
 LEFT
 lw A 07
+sw A 06
 goto SEND_COMMAND
 
 LEFT_BACKWARDS
-lw A 0C
+lw A 07
+lw B 0A 
+add A B 
+sw A 06
 goto SEND_COMMAND
 
 FORWARD
 lw A 09
+sw A 06
 goto SEND_COMMAND
 
 NEUTRAL
 li A 00
+sw A 06
 goto SEND_COMMAND
 
 BACKWARDS
 lw A 0A
+sw A 06
 goto SEND_COMMAND
 
 RIGHT_FORWARD
-lw A 0D
+lw A 08
+lw B 09 
+add A B 
+sw A 06
 goto SEND_COMMAND
 
 RIGHT
 lw A 08
+sw A 06
 goto SEND_COMMAND
 
 RIGHT_BACKWARDS
-lw A 0E
+lw A 08
+lw B 0A 
+add A B 
+sw A 06
 goto SEND_COMMAND
 
 SEND_COMMAND
-lw B 0F
-add A B 
+lw A 06 
 sw A 90
-sw A C1
-sw A D0
-sw A 06
-sw A D2
+sw A C0
 goto DISP_MOUSE
 
 // RAM Allocation
@@ -197,8 +190,3 @@ goto DISP_MOUSE
 // 0x08 RIGHT Command
 // 0x09 FORWARD Command
 // 0x0A BACKWARDS Command
-// 0x0B LEFT_FORWARD Command
-// 0x0C LEFT_BACKWARDS Command
-// 0x0D RIGHT_FORWARD Command
-// 0x0E RIGHT_BACKWARDS Command
-// 0x0F CAR_SELECT

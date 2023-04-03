@@ -1,0 +1,40 @@
+
+
+LOOP
+lw A A0
+sw A 00
+
+lw A A1 
+sw A 01
+
+lw A A2 
+sw A 02
+
+X_Check
+lw A 01
+li B 32
+bltq A B Y_Check1
+li B 6E
+bltq A B Y_Check2
+goto Y_Check2
+
+Y_Check1
+lw A 02
+li B 28 
+bltq A B 
+li B 50
+bltq A B 
+
+
+Write_VGA
+
+
+
+
+
+
+
+// RAM Allocation
+// 0x00 Mouse Status
+// 0x01 Mouse X
+// 0x02 Mouse Y

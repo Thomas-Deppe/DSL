@@ -8,7 +8,7 @@ li B 78
 breq A B Write_VGA_Data
 li B 32
 sw A B2
-sw B B1
+// sw B B1
 sw A B3
 inc A 
 sw A 01
@@ -20,7 +20,7 @@ sw A 02
 goto CheckY
 
 CheckY
-lw A 02
+lw A 01
 li B 78
 breq A B RESET_Y
 li B 6E
@@ -71,17 +71,79 @@ goto CheckX2
 RESET_X2
 li A 00 
 sw A 00
-lw A 00
+goto Mouse_Instruct
 
+Mouse_Instruct
+lw A A1
+lw B A2
+sw A 03 
+sw B 04
+sw A D0
+sw A B1 
+sw B B2
+li B 01 
+sw B B3
+lw A 03 
+li B 32 
+breq A B Detection
+li B 6E
+breq A B Detection
+lw A 04 
+li B 28 
+breq A B Detection
+li B 50 
+breq A B Detection
+lw A 03
+lw B 04
+sw A B1
+sw B B2 
+li B 00 
+sw B B4
+goto Detection
+// idle
+// look at line 151
 
+Timer_Instruct
+Detection
+li A 08 
+sw A 05
+lw A A1
+li B 32 
+bltq A B Grid
+li B 00
+sw B 05
+li B 6E
+bltq A B Grid
+li B 04
+sw B 05 
+goto Grid
 
+Grid
+li B 01
+sw B 06
+lw A A2
+li B 28 
+bltq A B Compare
+li B 00
+sw B 06 
+li B 50
+bltq A B Compare
+li B 02
+sw B 06
+goto Compare
 
-
-
-
-
+Compare
+lw A 05 
+lw B 06
+sw B C0
+sw A C1
+goto Mouse_Instruct
 
 // RAM allocation
 // 0x00 X 
 // 0x01 Y
 // 0x02 Colours
+// 0x03 Mouse X 
+// 0x04 Mouse Y
+// 0x05 (1A)
+// 0x06 (2A)
