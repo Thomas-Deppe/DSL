@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/Thomas Deppe/DSL_Projects/Final_Processor/Final_Processor.hw/hw_1/wave/hw_ila_data_1/hw_ila_data_1.wdb" id="1">
+         <top_modules>
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="4" />
+   <wave_markers>
+   </wave_markers>
+   <wvobject db_ref_id="1" fp_name="microProcessor/ActualAddress" type="array">
+      <obj_property name="ElementShortName">microProcessor/ActualAddress[7:0]</obj_property>
+      <obj_property name="ObjectShortName">microProcessor/ActualAddress[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" fp_name="microProcessor/Interrupt" type="array">
+      <obj_property name="ElementShortName">microProcessor/Interrupt[1:0]</obj_property>
+      <obj_property name="ObjectShortName">microProcessor/Interrupt[1:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" fp_name="microProcessor/ProgMemoryOut" type="array">
+      <obj_property name="ElementShortName">microProcessor/ProgMemoryOut[7:0]</obj_property>
+      <obj_property name="ObjectShortName">microProcessor/ProgMemoryOut[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" fp_name="microProcessor/curr_state" type="array">
+      <obj_property name="ElementShortName">microProcessor/curr_state[7:0]</obj_property>
+      <obj_property name="ObjectShortName">microProcessor/curr_state[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+</wave_config>
