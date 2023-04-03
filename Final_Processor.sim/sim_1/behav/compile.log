@@ -1,0 +1,12 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Thomas Deppe/DSL_Projects/Final_Processor/Final_Processor.srcs/sources_1/imports/new/Generic_counter.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Generic_counter
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Thomas Deppe/DSL_Projects/Final_Processor/Final_Processor.srcs/sources_1/imports/new/VGA_Sig_Gen.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module VGA_Sig_Gen
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Thomas Deppe/DSL_Projects/Final_Processor/Final_Processor.srcs/sources_1/imports/new/Frame_Buffer.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module VGA_Buffer
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Thomas Deppe/DSL_Projects/Final_Processor/Final_Processor.srcs/sources_1/new/VGA_BUS.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module VGABus
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Thomas Deppe/DSL_Projects/Final_Processor/Final_Processor.srcs/sim_1/new/VGA_TEST.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module VGA_TEST
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/Thomas Deppe/DSL_Projects/Final_Processor/Final_Processor.sim/sim_1/behav/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl

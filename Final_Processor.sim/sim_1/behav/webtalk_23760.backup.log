@@ -1,0 +1,15 @@
+#-----------------------------------------------------------
+# Webtalk v2015.2 (64-bit)
+# SW Build 1266856 on Fri Jun 26 16:35:25 MDT 2015
+# IP Build 1264090 on Wed Jun 24 14:22:01 MDT 2015
+# Start of session at: Tue Mar 28 17:36:54 2023
+# Process ID: 22384
+# Log file: C:/Users/Thomas Deppe/DSL_Projects/Final_Processor/Final_Processor.sim/sim_1/behav/webtalk.log
+# Journal file: C:/Users/Thomas Deppe/DSL_Projects/Final_Processor/Final_Processor.sim/sim_1/behav\webtalk.jou
+#-----------------------------------------------------------
+source C:/Users/Thomas -notrace
+invalid command name "[2104:25F4][2022-02-23T15:26:59]i001:"
+    while executing
+"[2104:25F4][2022-02-23T15:26:59]i001: Burn v3.10.4.4718, Windows v10.0 (Build 22000: Service Pack 0), path: C:\WINDOWS\Temp\{82D8D7F7-0506-42E0-8644-2..."
+    (file "C:/Users/Thomas" line 1)
+INFO: [Common 17-206] Exiting Webtalk at Tue Mar 28 17:36:54 2023...
