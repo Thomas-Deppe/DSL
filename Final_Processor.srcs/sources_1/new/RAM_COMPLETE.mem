@@ -1,0 +1,16 @@
+00 // 0x00 X pixel address
+00 // 0x01 Y pixel address
+BF // 0x02 Colour
+00 // 0x03 Mouse Status
+00 // 0x04 Mouse X 
+00 // 0x05 Mouse Y
+00 // 0x06 IR Command to send
+02 // 0x07 LEFT Command
+01 // 0x08 RIGHT Command
+08 // 0x09 FORWARD Command
+04 // 0x0A BACKWARDS Command
+0A // 0x0B LEFT_FORWARD Command
+06 // 0x0C LEFT_BACKWARDS Command
+09 // 0x0D RIGHT_FORWARD Command
+05 // 0x0E RIGHT_BACKWARDS Command
+00 // 0x0F CAR_SELECT
