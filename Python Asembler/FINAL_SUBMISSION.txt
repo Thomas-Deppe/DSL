@@ -1,0 +1,204 @@
+init
+lw A 02 //Set screens initial colour
+sw A B0 //store initial colour to VGA
+
+Timer_Instruct //Action taken under timer interrupt
+LOOP_X
+lw A 00 //Load X address from RAM
+li B 32 //Check the first X bound
+breq A B WriteColumn //If on bound write to VGA
+li B 6E //Check the second X bound
+breq A B WriteColumn //If on bound write to VGA
+li B A0 //Load the end of horizontal border (120 in decimal) 
+breq A B RESET_X //If the x reaches the border goes to reset x
+inc A // X address is incremented
+sw A 00 // stores X address back to RAM
+goto LOOP_X
+
+WriteColumn
+// lw A 00
+sw A B1 //Writes X to the VGA
+lw B 01 //Reads Y from RAM
+sw B B2 //Writes Y to the VGA
+sw B B3 //Enable colour change
+inc A //increment X address to write the whole column
+sw A 00 //store x address into RAM
+goto LOOP_X
+
+RESET_X
+li A 00 //load all zeros
+sw A 00 //reset the X address in RAM
+lw B 01 //load the Y address
+inc B //increment the Y address
+sw B 01 //store the Y address in RAM
+goto LOOP_Y
+
+LOOP_Y
+lw A 00 //load the X address
+li B A0 //load all zeros
+breq A B RESET_X //if the X is reset go to resetx
+lw A 01 //Loads Y from RAM
+li B 28 //Checks Y1 Bound
+breq A B WriteRow //If on bound write to VGA go write row
+li B 50 //Checks Y2 Bound
+breq A B WriteRow //If on bound write to VGA go write row
+li B 79 //load the last vertical bound
+breq A B RESET_Y //if reaches the last bound
+goto LOOP_X
+
+WriteRow
+// lw A 01
+sw A B2 //Store Y to the VGA
+lw B 00 //Load X from RAM
+sw B B1 //Store X to VGA
+sw B B3 //Enables colour change
+inc B //increment X address
+sw B 00 //write the whole row based on X
+goto LOOP_Y
+
+RESET_Y
+li A 00 //load all zeros to Y
+sw A 01// store Y address as 0 in RAM
+goto COLOUR_SELECT
+
+COLOUR_SELECT
+lw A E1 //load the values from the slide switches to change the colour 
+li B 00 //load all zeros
+bgtq A B NEW_COLOUR //if there is a colour input go to new colour
+lw A 02 // if not load the colour from RAM
+sw A B0 // store the initial colour back to VGA
+goto CAR_SELECT
+
+NEW_COLOUR
+sw A B0 //store the new colour back VGA
+goto CAR_SELECT
+
+CAR_SELECT
+lw A E0 //load the value from slideswitches for car select
+sl A //shift left 4 times
+sl A
+sl A 
+sl A
+sw A 0F //store the shifted value into RAM
+idle
+
+Mouse_Instruct
+lw A 04 //load the mouse X address from RAM
+lw B 05 //load the mouse Y address from RAM
+sw A B1 //store the mouse X into VGA to colour the mouse pixel
+sw B B2 //store the mouse Y into VGA to colour the mouse pixel
+sw B B4 //store a value into VGA disable mouse colouring
+lw A A1 //load mouse X address from the mouse module
+sw A 04 //load the mouse X addres back to RAM
+lw B A2 //load the mouse Y address from mouse module
+li A 77 //load the mouse vertical limit, 1 less than VGA vertical limit
+sub A B //subtracting because the mouse Y and VGA Y are inverted
+sw A 05 //store the mouse Y back to RAM
+lw A A0 //loads the value from mouse status
+li B 0A //loads 10 
+breq A B NEUTRAL //if mouse status is 10 i.e. right click stop the car
+goto DETECTION
+
+DISP_MOUSE
+lw A 04 //load the mouse X address
+lw B 05 //load the mouse Y address
+sw A B1 //store X into VGA
+sw B B2 //store Y into VGA
+sw B B3 //Turn the enable on to show the mouse pixel
+goto Timer_Instruct
+
+DETECTION
+lw A 04 //load mouse X address
+li B 32 //load the first horizontal limit
+bltq A B REGION1 //if it is less go to region 1, left part of the screen
+li B 6E //load the second horizontal limit
+bltq A B REGION2 //if it is less go to region 2, middle part of the screen
+goto REGION3 //if not go to region 3, right part of the screen
+
+REGION1
+lw A 05 //load mouse Y
+li B 28 //load first verical limit
+bltq A B LEFT_FORWARD //if in region, go to left forward command
+li B 50 //load second vertical limit
+bltq A B LEFT //if in region go to left command
+goto LEFT_BACKWARDS //if not go to left backwards command
+
+REGION2
+lw A 05 //load mouse Y
+li B 28 //load first verical limit
+bltq A B FORWARD //if in region, go to forward command
+li B 50 //load second vertical limit
+bltq A B NEUTRAL //if in region go to neutral command
+goto BACKWARDS //if not go to backwards command
+
+REGION3
+lw A 05 //load mouse Y
+li B 28 //load first verical limit
+bltq A B RIGHT_FORWARD //if in region, go to right forward command
+li B 50 //load second vertical limit
+bltq A B RIGHT //if in region go to right command
+goto RIGHT_BACKWARDS //if in region go to right backwards command
+
+LEFT_FORWARD
+lw A 0B //load from RAM command for left forward
+goto SEND_COMMAND
+
+LEFT
+lw A 07 //load from RAM command for left 
+goto SEND_COMMAND
+
+LEFT_BACKWARDS
+lw A 0C //load from RAM command for left backwards
+goto SEND_COMMAND
+
+FORWARD
+lw A 09 //load from RAM command for forward
+goto SEND_COMMAND
+
+NEUTRAL
+li A 00 //load from RAM command for neutral
+goto SEND_COMMAND
+
+BACKWARDS
+lw A 0A //load from RAM command for backwards
+goto SEND_COMMAND
+
+RIGHT_FORWARD
+lw A 0D //load from RAM command for right forward
+goto SEND_COMMAND
+
+RIGHT
+lw A 08 //load from RAM command for left
+goto SEND_COMMAND
+
+RIGHT_BACKWARDS
+lw A 0E //load from RAM command for right backwards
+goto SEND_COMMAND
+
+SEND_COMMAND //sending commands to the car
+lw B 0F //load command from RAM, selected car
+add A B //add the car select and the car direction commands
+sw A 90 //send the car the added command
+sw A C1 //store the command in LEDs
+sw A D0 //store the command in 7 segment display for command
+sw A 06 //store the value in RAM
+sw A D2 //store the value in 7 segment display for car colour, car direction
+goto DISP_MOUSE
+
+// RAM Allocation
+// 0x00 X pixel address
+// 0x01 Y pixel address
+// 0x02 Colour
+// 0x03 Mouse Status
+// 0x04 Mouse X 
+// 0x05 Mouse Y
+// 0x06 IR Command to send
+// 0x07 LEFT Command
+// 0x08 RIGHT Command
+// 0x09 FORWARD Command
+// 0x0A BACKWARDS Command
+// 0x0B LEFT_FORWARD Command
+// 0x0C LEFT_BACKWARDS Command
+// 0x0D RIGHT_FORWARD Command
+// 0x0E RIGHT_BACKWARDS Command
+// 0x0F CAR_SELECT
